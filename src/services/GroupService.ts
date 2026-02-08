@@ -45,7 +45,7 @@ export class GroupService {
                 await manager.update(Group, groupId, {
                     status: GroupStatus.EMPTY
                 });
-                logger.info(`Group ${groupId} is now empty.`);
+                logger.debug(`Group ${groupId} is now empty.`);
             }
 
             return { message: "User removed successfully" };
