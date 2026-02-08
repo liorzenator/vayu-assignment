@@ -63,7 +63,7 @@ const PORT = process.env.PORT || 8080;
 if (process.env.NODE_ENV !== 'test') {
     AppDataSource.initialize()
         .then(() => {
-            console.log("MySQL Database Connected!");
+            logger.info("MySQL Database Connected!");
             app.listen(PORT, () => {
                 logger.info((`Server running on http://localhost:${PORT}`));
             });
