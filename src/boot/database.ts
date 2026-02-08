@@ -10,7 +10,7 @@ export const AppDataSource = new DataSource({
     port: env.db.port, // This is now guaranteed to be a number
     username: env.db.username,
     password: env.db.password,
-    database: env.db.name,
+    database: env.db.schema,
 
     synchronize: env.nodeEnv !== 'production', // Safe check
     logging: env.nodeEnv === 'development',

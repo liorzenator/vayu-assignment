@@ -7,13 +7,12 @@ import { logger } from "../utils/Logger";
 @injectable()
 export class GroupService {
     private groupRepository = AppDataSource.getRepository(Group);
-    private userRepository = AppDataSource.getRepository(User);
 
     /**
      * Requirement: Remove user from group (Many-to-Many version)
      */
     async removeUserFromGroup(userId: number, groupId: number) {
-        logger.info(`Attempting to remove User ${userId} from Group ${groupId}`);
+        logger.debug(`Attempting to remove User ${userId} from Group ${groupId}`);
 
         return await AppDataSource.manager.transaction(async (manager : any) => {
             // 1. Check if the Group exists and load its users

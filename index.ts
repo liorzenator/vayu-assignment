@@ -6,10 +6,29 @@ import {AppDataSource} from "./src/boot/database";
 import userRoutes from "./src/routes/UserRoutes";
 import groupRoutes from "./src/routes/GroupRoutes";
 import { errorMiddleware } from "./src/middleware/ErrorMiddleware";
+import { correlationMiddleware } from "./src/middleware/CorrelationMiddleware";
+import { httpLoggerMiddleware } from "./src/middleware/HttpLoggerMiddleware";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./src/boot/swagger";
+import {logger } from './src/utils/Logger';
 
-export const app = express();
+const app = express();
+export { app };
+app.set('etag', false);
+
+// Disable caching for all responses
+app.use((req, res, next) => {
+    req.headers['if-none-match'] = undefined;
+    req.headers['if-modified-since'] = undefined;
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    res.set('Surrogate-Control', 'no-store');
+    next();
+});
+
+app.use(correlationMiddleware);
+app.use(httpLoggerMiddleware);
 app.use(express.json());
 
 // === Root Landing Page ===
@@ -46,8 +65,8 @@ if (process.env.NODE_ENV !== 'test') {
         .then(() => {
             console.log("MySQL Database Connected!");
             app.listen(PORT, () => {
-                console.log(`Server running on http://localhost:${PORT}`);
+                logger.info((`Server running on http://localhost:${PORT}`));
             });
         })
-        .catch((error) => console.log("Database connection failed:", error));
+        .catch((error) => logger.info("Database connection failed:", error));
 }
