@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { injectable } from 'tsyringe';
 import { UserService } from '../services/UserService';
-import { BaseController } from './BaseController';
+import { BaseController } from './baseController';
 
 @injectable()
 export class UserController extends BaseController {
@@ -19,7 +19,7 @@ export class UserController extends BaseController {
     };
 
     updateUsersBulk = async (req: Request, res: Response) => {
-        const updates = req.body.updates;
+        const { updates } = req.body;
         await this.userService.updateUsersBulk(updates);
         res.json({ message: 'Bulk update successful' });
     };

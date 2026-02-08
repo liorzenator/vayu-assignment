@@ -77,6 +77,12 @@ When("I send a DELETE request to remove the user from the group", async function
     (baseSteps as any).response = await request(app).delete(`/groups/${testGroup.id}/users/${testUser.id}`);
 });
 
+When("I send a PUT request to {string} with body:", async function (path: string, body: string) {
+    (baseSteps as any).response = await request(app)
+        .put(path)
+        .send(JSON.parse(body));
+});
+
 Then("the response body should contain {int} users", function (count: number) {
     const response = (baseSteps as any).response;
     expect(response.body.data).to.be.an('array');
