@@ -2,7 +2,7 @@ import { BeforeAll, AfterAll, Before, Given, When, Then } from "@cucumber/cucumb
 import request from "supertest";
 import { expect } from "chai";
 import { app } from "../../index";
-import { AppDataSource } from "../../src/config/database";
+import { AppDataSource } from "../../src/boot/database";
 import { User } from "../../src/entity/User";
 import { Group } from "../../src/entity/Group";
 import * as baseSteps from "./steps";

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { injectable } from 'tsyringe';
 import { UserService } from '../services/UserService';
-import { BaseController } from './baseController';
+import { BaseController } from './BaseController';
 
 @injectable()
 export class UserController extends BaseController {

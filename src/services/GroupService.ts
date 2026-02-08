@@ -1,8 +1,8 @@
 import { injectable } from "tsyringe";
-import { AppDataSource } from "../config/database";
+import { AppDataSource } from "../boot/database";
 import { Group, GroupStatus } from "../entity/Group";
 import { User } from "../entity/User";
-import { logger } from "../utils/logger";
+import { logger } from "../utils/Logger";
 
 @injectable()
 export class GroupService {

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { injectable } from 'tsyringe';
 import { GroupService } from '../services/GroupService';
-import { logger } from '../utils/logger';
-import { BaseController } from './baseController';
+import { logger } from '../utils/Logger';
+import { BaseController } from './BaseController';
 
 @injectable()
 export class GroupController extends BaseController {

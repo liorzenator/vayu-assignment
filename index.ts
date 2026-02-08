@@ -2,12 +2,12 @@ import "reflect-metadata";
 import { version, name } from "./package.json";
 import "dotenv/config";
 import express from "express";
-import {AppDataSource} from "./src/config/database";
+import {AppDataSource} from "./src/boot/database";
 import userRoutes from "./src/routes/UserRoutes";
 import groupRoutes from "./src/routes/GroupRoutes";
-import { errorMiddleware } from "./src/middleware/errorMiddleware";
+import { errorMiddleware } from "./src/middleware/ErrorMiddleware";
 import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./src/config/swagger";
+import { swaggerSpec } from "./src/boot/swagger";
 
 export const app = express();
 app.use(express.json());

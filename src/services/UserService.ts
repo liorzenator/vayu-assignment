@@ -1,7 +1,7 @@
 import { injectable } from "tsyringe";
-import { AppDataSource } from "../config/database";
+import { AppDataSource } from "../boot/database";
 import { User, UserStatus } from "../entity/User";
-import { logger } from "../utils/logger";
+import { logger } from "../utils/Logger";
 
 @injectable()
 export class UserService {

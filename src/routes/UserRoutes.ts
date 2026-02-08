@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { container } from "tsyringe";
-import { UserController } from "../controllers/userController";
-import { asyncHandler } from "../utils/asyncHandler";
-import { validate } from "../middleware/validationMiddleware";
-import { bulkUpdateSchema, paginationSchema } from "../schemas/zodSchemas";
+import { UserController } from "../controllers/UserController";
+import { asyncHandler } from "../utils/AsyncHandler";
+import { validate } from "../middleware/ValidationMiddleware";
+import { bulkUpdateSchema, paginationSchema } from "../schemas/ZodSchemas";
 
 const router = Router();
 const userController = container.resolve(UserController);
