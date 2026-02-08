@@ -3,8 +3,8 @@ import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, printf, colorize, errors } = format;
 
 // Define custom log format for development
-const logFormat = printf(({ level, message, timestamp, stack }) => {
-    return `${timestamp} [${level}]: ${stack || message}`;
+const logFormat = printf(({ level, message, timestamp, stack, correlationId }) => {
+    return `${timestamp} [${level}]: ${stack || message} [${correlationId ? correlationId : ''}]`;
 });
 
 export const logger = createLogger({

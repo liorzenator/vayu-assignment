@@ -12,18 +12,21 @@ export const validate = (schema: ZodSchema) =>
         }) as any;
 
         // Replace original with validated data (important for type safety and defaults)
-        if (validated.body) Object.assign(req.body, validated.body);
-        if (validated.query) {
-            try {
-                (req as any).query = validated.query;
-            } catch (e) {
-                // If req.query is read-only, we must avoid direct assignment.
-                // In some Express versions, it's a getter.
-                // We'll try to define it if possible, or just Object.assign if it's an object.
-                Object.assign(req.query, validated.query);
-            }
+        if (validated.body) {
+            Object.assign(req.body, validated.body);
         }
-        if (validated.params) Object.assign(req.params, validated.params);
+        if (validated.query) {
+            // req.query is often read-only in Express, so we must use Object.assign if it's an object
+            // or define the property if it's missing (though it shouldn't be).
+            // First clear existing query to ensure defaults from Zod are applied
+            for (const key in req.query) {
+                delete (req.query as any)[key];
+            }
+            Object.assign(req.query, validated.query);
+        }
+        if (validated.params) {
+            Object.assign(req.params, validated.params);
+        }
 
         next();
     } catch (error) {

@@ -14,6 +14,7 @@ const env = cleanEnv(process.env, {
     DB_USERNAME: str(),
     DB_PASSWORD: str(),
     DB_NAME: str(),
+    DB_SCHEMA: str({ default: '' }),
     DB_ROOT_PASSWORD: str(), // For MySQL root password if needed
 
     // Example of a custom validator if needed
@@ -30,5 +31,6 @@ export const config = {
         username: env.DB_USERNAME,
         password: env.DB_PASSWORD,
         name: env.DB_NAME,
+        schema: env.DB_SCHEMA || env.DB_NAME,
     },
 };

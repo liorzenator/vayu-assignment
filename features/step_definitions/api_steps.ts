@@ -11,8 +11,40 @@ let testUser: User;
 let testGroup: Group;
 
 BeforeAll(async () => {
-    if (!AppDataSource.isInitialized) {
-        await AppDataSource.initialize();
+    if (AppDataSource.options.type === 'mysql') {
+        const { host, port, database } = AppDataSource.options as any;
+        const mysql = require('mysql2/promise');
+
+        try {
+            // Try connecting with root first if root password is available
+            const rootPassword = process.env.DB_ROOT_PASSWORD;
+            const connection = await mysql.createConnection({
+                host,
+                port,
+                user: rootPassword ? 'root' : (AppDataSource.options as any).username,
+                password: rootPassword || (AppDataSource.options as any).password
+            });
+            await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\``);
+            // Grant privileges to the user for the test database
+            if (rootPassword) {
+                const userName = (AppDataSource.options as any).username;
+                await connection.query(`GRANT ALL PRIVILEGES ON \`${database}\`.* TO '${userName}'@'%'`);
+                await connection.query(`FLUSH PRIVILEGES`);
+            }
+            await connection.end();
+        } catch (error: any) {
+            console.warn(`Could not ensure database ${database} exists or grant privileges: ${error.message}`);
+            console.warn(`Please ensure database ${database} is created manually and user has access if tests fail.`);
+        }
+    }
+
+    try {
+        if (!AppDataSource.isInitialized) {
+            await AppDataSource.initialize();
+        }
+    } catch (error: any) {
+        console.error(`FAILED TO INITIALIZE DATASOURCE: ${error.message}`);
+        throw error;
     }
 });
 

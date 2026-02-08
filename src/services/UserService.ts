@@ -41,7 +41,7 @@ export class UserService {
             throw new Error("Batch limit exceeded: Cannot update more than 500 users at once.");
         }
 
-        logger.info(`Starting bulk update for ${updates.length} users...`);
+        logger.debug(`Starting bulk update for ${updates.length} users...`);
 
         // WRAPPED IN TRANSACTION: If one fails, they ALL fail.
         return await AppDataSource.manager.transaction(async (transactionalEntityManager) => {
@@ -55,7 +55,7 @@ export class UserService {
             });
 
             await Promise.all(updatePromises);
-            logger.info("Bulk update completed successfully.");
+            logger.debug("Bulk update completed successfully.");
         });
     }
 }

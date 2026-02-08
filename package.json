@@ -11,7 +11,7 @@
     "migration:generate": "npx typeorm-ts-node-commonjs migration:generate -d src/boot/database.ts",
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d src/boot/database.ts",
     "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/boot/database.ts",
-    "test": "set NODE_ENV=test&& cucumber-js"
+    "test": "set NODE_ENV=test&& set DB_SCHEMA=vayu_test&& cucumber-js"
   },
   "keywords": [],
   "author": "",
@@ -41,6 +41,7 @@
     "chai": "^6.2.2",
     "supertest": "^7.2.2",
     "ts-node": "^10.9.2",
+    "typeorm-extension": "^3.8.0",
     "typescript": "^5.9.3"
   }
 }

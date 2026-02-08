@@ -18,7 +18,8 @@ export const errorMiddleware = (
         details = error.details;
     } else {
         // Log unexpected errors
-        logger.error(`[Unhandled Error] ${error.message}`, error);
+        const correlationId = (req as any).correlationId;
+        logger.error(`[Unhandled Error] ${error.message}`, { error, correlationId });
     }
 
     res.status(status).json({
