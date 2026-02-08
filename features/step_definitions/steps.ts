@@ -3,7 +3,7 @@ import request from "supertest";
 import { expect } from "chai";
 import { app } from "../../index";
 
-let response: any;
+export let response: any;
 
 Given("the API is running", async function () {
     // In this case, we don't need to do anything as we're testing the app object directly
