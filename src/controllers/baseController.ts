@@ -17,8 +17,8 @@ export abstract class BaseController {
     ) {
         logger.info(`Fetching all ${resourceName}...`);
 
-        const limit = Number(req.query.limit) || 10;
-        const offset = Number(req.query.offset) || 0;
+        const limit = Number(req.query.limit);
+        const offset = Number(req.query.offset);
 
         try {
             const result = await fetchMethod(limit, offset);
